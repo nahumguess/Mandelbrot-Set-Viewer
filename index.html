@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Mandelbrot Set</title>
+    <style>
+      nav a {
+  width: 15%;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="inf+hist.html">Mandelbrot Info</a>
+        <a href="sources.html">Additional Resources</a>
+        <a href="contact.html">Contact Us</a>
+        <a id="login-link" href="login.html">Log In</a>
+        <a id="logout-link" href="#" onclick="logoutUser()" style="display: none;">Log Out</a>
+        <img src="" alt="Theme Icon" class="nav-svg" id="theme-icon">
+        <label class="theme-switch" for="checkbox">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Mandelbrot Set</h1>
+        <p><strong>Instructions:</strong> To use the Mandelbrot set viewer, tap on the canvas to zoom in and hold to zoom out.</p>
+        <div id="zoom-states-container">
+          <button id="save-zoom-state-button">Save Zoom State</button>
+          <button id="remove-zoom-state-button">Remove Save State</button>
+          <select id="zoom-states-dropdown">
+            <option value="">Select a saved zoom state</option>
+          </select>
+        </div>
+        <div id="canvas-container">
+          <canvas id="canvas" width="800" height="500"></canvas>
+          <div id="buttons-container">
+            <button class="button-56" id="save-button">Save</button>
+            <button class="button-56" id="fullscreen-button">Full Screen</button>
+            <button class="button-56" id="reset-button">Reset</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      
+      const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+      const currentTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('theme-icon');
+      
+      // Update the theme icon
+      function updateThemeIcon() {
+        // If the theme is dark, set the icon to the moon
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        themeIcon.src = "moon-svgrepo-com.svg";
+      // Otherwise, set the icon to the sun
+      } else {
+        themeIcon.src = "sun-svgrepo-com.svg";
+      }
+    }
+
+    // If the user has a theme saved in local storage, set it
+      if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon();
+      
+        // If the theme is dark, set the toggle switch to checked
+        if (currentTheme === 'dark') {
+          toggleSwitch.checked = true;
+          // Otherwise, set the toggle switch to unchecked
+        } else if (currentTheme === 'light') {
+        }
+      }
+      // Add an event listener to the toggle switch
+      toggleSwitch.addEventListener('change', switchTheme, false);
+      // Add an event listener to the window to update the theme icon
+      window.addEventListener("DOMContentLoaded", () => {
+  
+});
+      
+      function switchTheme(e) {
+        // Save the current zoom state before changing the theme
+        localStorage.setItem("mandelbrot_zoom", JSON.stringify({
+          panx: panx,
+          pany: pany,
+          zoom: zoom
+        }));
+
+        // Save the saved zoom states in local storage
+        if (savedZoomStates.length > 0) {
+          localStorage.setItem("mandelbrot_zoom_states", JSON.stringify(savedZoomStates));
+  
+        } 
+        else {
+          localStorage.removeItem("mandelbrot_zoom_states");
+        }
+
+        // Switch the theme
+        if (e.target.checked) {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+        }
+
+        setTimeout(() => {
+          location.reload();
+        }, 50);
+        updateThemeIcon();
+      }
+    </script>
+    
+    <script>
+    var drawIter;
+    var panx = -100;
+    var pany = 0;
+    var zoom = 150;
+  
+    (function() {
+    var canvas = document.getElementById("canvas"); 
+    var context = canvas.getContext("2d");
+    var imagew = canvas.width;
+    var imageh = canvas.height;
+    var imagedata = context.createImageData(imagew, imageh);
+    var offsetx = -imagew/2;
+    var offsety = -imageh/2;
+    var palette = [];
+    var maxiter = 1000;
+  
+    var mouseDownTimeout;
+    var isZoomOut = false;
+  
+    function init() {
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mousemove", onMouseMove);
+  
+  
+    const savedZoomState = localStorage.getItem('mandelbrot_zoom');
+    if (savedZoomState) {
+      const zoomState = JSON.parse(savedZoomState);
+      panx = zoomState.panx;
+      pany = zoomState.pany;
+      zoom = zoomState.zoom;
+    }
+  
+    drawColor();
+    drawIter();
+    main(0);
+  }
+  var isMouseInsideCanvas = false;  
+  function onMouseMove(e) {
+    var rect = canvas.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+  
+    isMouseInsideCanvas = (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height);
+  }
+  
+    function main(tframe) {
+        window.requestAnimationFrame(main);
+        context.putImageData(imagedata, 0, 0);
+    }
+    
+    function drawColor() {
+    var roffset = 24;
+    var goffset = 16;
+    var boffset = 0;
+    var currentTheme = localStorage.getItem('theme') || 'light';
+    
+    if (currentTheme === 'light') {
+      roffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--light-palette-color1').trim().substring(1, 3), 16);
+      goffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--light-palette-color2').trim().substring(1, 3), 16);
+      boffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--light-palette-color3').trim().substring(1, 3), 16);
+    }
+  
+    for (var i = 0; i < 256; i++) {
+      palette[i] = { r: roffset, g: goffset, b: boffset };
+  
+      if (i < 64) {
+        roffset += 3;
+      } else if (i < 128) {
+        goffset += 3;
+      } else if (i < 192) {
+        boffset += 3;
+      }
+    }
+  }
+  
+    drawIter = function () {
+        for (var y=0; y<imageh; y++) {
+            for (var x=0; x<imagew; x++) {
+                iterate(x, y, maxiter);
+            }
+        }
+    }
+    function iterate(x, y, maxiter) {
+        var x0 = (x + offsetx + panx) / zoom;
+        var y0 = (y + offsety + pany) / zoom;
+        var a = 0;
+        var b = 0;
+        var rx = 0;
+        var ry = 0;
+        var iter = 0;
+        while (iter < maxiter && (rx * rx + ry * ry <= 4)) {
+            rx = a * a - b * b + x0;
+            ry = 2 * a * b + y0;
+            a = rx;
+            b = ry;
+            iter++;
+        }
+        var color;
+        if (iter == maxiter) {
+            color = { r:0, g:0, b:0};
+        } else {
+            var index = Math.floor((iter / (maxiter-1)) * 255);
+            color = palette[index];
+        }
+        var pixelindex = (y * imagew + x) * 4;
+        imagedata.data[pixelindex] = color.r;
+        imagedata.data[pixelindex+1] = color.g;
+        imagedata.data[pixelindex+2] = color.b;
+        imagedata.data[pixelindex+3] = 255;
+    }
+    
+    function zoomIter(x, y, factor, zoomin) {
+        if (zoomin) {
+            zoom *= factor;
+            panx = factor * (x + offsetx + panx);
+            pany = factor * (y + offsety + pany);
+        } else {
+            zoom /= factor;
+            panx = (x + offsetx + panx) / factor;
+            pany = (y + offsety + pany) / factor;
+        }
+    }
+    function onMouseDown(e) {
+      if (!isMouseInsideCanvas) return; 
+        isZoomOut = false; 
+        var pos = getMousePos(canvas, e);
+  
+        mouseDownTimeout = setTimeout(function() {
+            isZoomOut = true;
+            var zoomfactor = 2;
+            zoomIter(pos.x, pos.y, zoomfactor, false);
+            drawIter();
+        }, 500);
+    }
+  
+    function onMouseUp(e) {
+      if (!isMouseInsideCanvas) return;
+        clearTimeout(mouseDownTimeout);
+        if (!isZoomOut) {
+            var pos = getMousePos(canvas, e);
+            var zoomfactor = 2;
+            zoomIter(pos.x, pos.y, zoomfactor, true);
+            drawIter();
+        }
+    }
+  
+    function getMousePos(canvas, e) {
+        var rect = canvas.getBoundingClientRect();
+  
+  
+  
+        return {
+            x: Math.round((e.clientX - rect.left)/(rect.right - rect.left)*canvas.width),
+            y: Math.round((e.clientY - rect.top)/(rect.bottom - rect.top)*canvas.height)
+        };
+    }
+    init();
+  })();
+
+    //check if user is logged in
+      function checkUserLoggedIn() {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            saveZoomStateButton.disabled = false;
+          } else {
+            saveZoomStateButton.disabled = true;
+          }
+        });
+      }
+      
+      const saveZoomStateButton = document.getElementById("save-zoom-state-button");
+      const zoomStatesDropdown = document.getElementById("zoom-states-dropdown");
+      
+      
+      let savedZoomStates = [];
+
+        //store saved zoom states in local storage
+      function saveZoomState() {
+        const user = firebase.auth().currentUser;
+        //check if user is logged in
+        if(user) {
+          //check if user has reached the limit of 5 saved zoom states
+          if (savedZoomStates.length >= 5) {
+          const removeZoomState = confirm("You have reached the limit of 5 saved zoom states. To save a new state, you must remove an existing one. Do you want to proceed?");
+          //if user wants to remove a zoom state, prompt them to enter the name of the zoom state they want to remove
+          if (removeZoomState) {
+            const zoomStateToRemove = prompt("Enter the name of the zoom state you want to remove:");
+            const indexToRemove = savedZoomStates.findIndex(zoomState => zoomState.name === zoomStateToRemove);
+            if (indexToRemove !== -1) {
+              savedZoomStates.splice(indexToRemove, 1);
+              updateZoomStatesDropdown();
+            } else {
+              alert("Invalid zoom state name. Please enter a valid name.");
+            }
+          }
+          //save zoom state
+        } else {
+          const zoomStateName = prompt("Enter a name for the zoom state:");
+          if (zoomStateName) {
+            const zoomState = {
+              panx: panx,
+              pany: pany,
+              zoom: zoom,
+              id: Date.now(),
+              name: zoomStateName
+            };
+            savedZoomStates.push(zoomState);
+            updateZoomStatesDropdown();
+          }
+        }
+        }
+        //if user is not logged in, prompt them to log in
+        else {
+          alert("You must be logged in to save a zoom state.");
+        }
+      }
+      const removeZoomStateButton = document.getElementById("remove-zoom-state-button");
+
+      //remove zoom state from dropdown
+      function removeZoomState() {
+        const user = firebase.auth().currentUser;
+        //check if user is logged in
+        if(user){
+          const selectedZoomStateId = parseInt(zoomStatesDropdown.value);
+          const indexToRemove = savedZoomStates.findIndex((zoomState) => zoomState.id === selectedZoomStateId);
+      
+          //check if user has selected a zoom state to remove
+          if (indexToRemove !== -1) {
+            const confirmRemove = confirm(`Do you want to remove the "${savedZoomStates[indexToRemove].name}" zoom state?`);
+          //if user wants to remove zoom state, remove it from dropdown
+          if (confirmRemove) {
+            savedZoomStates.splice(indexToRemove, 1);
+            updateZoomStatesDropdown();
+          }
+          //if user does not select a zoom state to remove, prompt them to select one
+        } else {
+          alert("Please select a zoom state to remove.");
+        }
+        }
+        //if user is not logged in, prompt them to log in
+        else{
+          alert("You must be logged in to remove a zoom state.");
+        }
+      }
+      
+      removeZoomStateButton.addEventListener("click", removeZoomState);
+  
+      //update dropdown with saved zoom states
+      function updateZoomStatesDropdown() {
+        const user = firebase.auth().currentUser;
+    
+        zoomStatesDropdown.innerHTML = '<option value="">Select a saved zoom state</option>';
+
+        savedZoomStates.forEach((zoomState) => {
+          const option = document.createElement("option");
+          option.value = zoomState.id;
+          option.textContent = zoomState.name;
+          zoomStatesDropdown.appendChild(option);
+        });
+      }
+      //apply selected zoom state
+      function applyZoomState() {
+        const selectedZoomStateId = parseInt(zoomStatesDropdown.value);
+        const selectedZoomState = savedZoomStates.find((zoomState) => zoomState.id === selectedZoomStateId);
+      
+        if (selectedZoomState) {
+          panx = selectedZoomState.panx;
+          pany = selectedZoomState.pany;
+          zoom = selectedZoomState.zoom;
+          drawIter();
+        }
+      }
+  
+      saveZoomStateButton.addEventListener("click", saveZoomState);
+      zoomStatesDropdown.addEventListener("change", applyZoomState);
+      
+    </script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const fullscreenButton = document.getElementById("fullscreen-button");
+      
+      fullscreenButton.addEventListener("click", () => {
+        canvas.requestFullscreen();
+      });
+    </script>
+    <script>
+      const saveButton = document.getElementById("save-button");
+  
+      saveButton.addEventListener("click", () => {
+        const dataURL = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = dataURL;
+        link.download = "mandelbrot_set.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    </script>
+    <script>
+      const resetButton = document.getElementById("reset-button");
+  
+      resetButton.addEventListener("click", () => {
+        panx = -100;
+        pany = 0;
+        zoom = 150;
+        drawIter();
+      });
+  
+    </script>
+  
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="config.js"></script>
+    <script src="navbar.js"></script>
+  </body>
+</html>

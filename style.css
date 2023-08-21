@@ -1,0 +1,598 @@
+:root {
+  --primary-color: #37474F;
+  --secondary-color: #ddd;
+  --text-color: white;
+  --bg-color: #DEE4E7;
+  --heading-color: #292922;
+  --nav-link-color: white;
+  --light-palette-color1: #08d4d2;
+  --light-palette-color2: #4dabf5;
+  --light-palette-color3: #633eb9;
+  --bcolor1: rgb(137, 131, 131);
+  --button-text-color: #36454F;
+  --whiteLight-blackDark: black;
+  --scroll-indicator: rgb(67, 67, 67);
+}
+
+button{
+  background-color: var(--bcolor1);
+  color: var(--button-text-color);
+  border-radius: 8px;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: 16px;
+  font-family: Inter,sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+#save-zoom-state-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#remove-zoom-state-button {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button hover styles */
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button active styles */
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Select element styles */
+#zoom-states-dropdown {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  appearance: none;
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Select element hover styles */
+#zoom-states-dropdown:hover {
+  border-color: #999;
+}
+
+#login-link {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#signup-link {
+  margin-right: 20px;
+  margin-left: 20px;
+  display: none;
+}
+#logout-link {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 125px);
+  position:relative;
+  margin-right: 50px;
+}
+
+#canvas {
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-color);
+  width: 100%;
+  height: 95%;
+  max-width: 800px;
+  max-height: 600px;
+  margin-right: 75px;
+}
+
+#buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#save-button,
+#fullscreen-button {
+  width: 200px;
+  border-radius: 8px;
+  margin: 0 5px; /* Add some space between the buttons */
+}
+
+
+
+.button-56 {
+  align-items: center;
+  background-color: var(--bcolor1);
+  border: 2px solid black;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-56:after {
+  background-color: black;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-56:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-56:active {
+  background-color: var(--secondary-color);
+  outline: 0;
+}
+
+.button-56:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-56 {
+    padding: 0 40px;
+  }
+}
+
+
+
+[data-theme="dark"] {
+  --primary-color: #333;
+  --secondary-color: #ddd;
+  --text-color: white;
+  --bg-color: #222222;
+  --heading-color: #818cab;
+  --nav-link-color: white; 
+  --bcolor1: rgb(137, 131, 131);
+}
+
+[data-theme="light"] ul li:nth-child(3) {
+color: #37474F;
+
+}
+
+[data-theme="dark"] ul li:nth-child(3) {
+color: white;
+}
+
+
+nav a {
+  color: var(--nav-link-color); 
+}
+
+nav a:hover {
+  background-color: var(--secondary-color);
+  color: var(--bg-color);
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+[data-theme="dark"] a {
+  color: var(--nav-link-color); /* Add this line to set the link color in dark mode */
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+nav {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--primary-color);
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+nav a {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+  width: 18%;
+  color: var(--text-color);
+  text-align: center;
+  padding: 15px 0;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+main {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 60px;
+  text-align: center;
+  color: var(--whiteLight-blackDark);
+}
+
+h1 {
+  color: var(--secondary-color);
+  margin-bottom: 35px;
+  font-size: 40px;
+}
+h2{
+  color: var(--secondary-color);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+[data-theme="light"] h1 {
+  color: #37474F;
+}
+[data-theme="light"] h2 {
+  color: #37474F;
+}
+
+
+/* Toggle switch styles */
+
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 24px; /* Decreased from 34px */
+  position: relative;
+  width: 48px; /* Decreased from 60px */
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 24px;
+  position: relative;
+  width: 44px;
+}
+
+
+
+.slider {
+  background-color: var(--secondary-color);
+  bottom: 0;
+  cursor: pointer;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+  width: 40px;
+}
+[data-theme="light"] .slider:before {
+  background-color: var(--primary-color);
+}
+
+[data-theme="dark"] .slider {
+  background-color: black;
+}
+
+[data-theme="dark"] .slider:before {
+  background-color: grey;
+  bottom: 2px;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  transition: .4s;
+  width: 16px;
+}
+
+.slider:before {
+  background-color: var(--bg-color);
+  bottom: 2px;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  transition: .4s;
+  width: 16px;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+em {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+
+:root {
+  --primary-color: #37474F;
+  --secondary-color: #ddd;
+  --text-color: white;
+  --bg-color: #DEE4E7;
+  --heading-color: #292922;
+  --nav-link-color: white;
+  --bcolor1: rgb(137, 131, 131);
+  --button-text-color: #36454F;
+  --whiteLight-blackDark: black;
+  --scroll-indicator: rgb(67, 67, 67);
+}
+
+[data-theme="dark"] {
+  --primary-color: #333;
+  --secondary-color: #ddd;
+  --text-color: white;
+  --bg-color: #222222;
+  --button-text-color: #36454F;
+  --heading-color: #818cab;
+  --nav-link-color: white;
+  --whiteLight-blackDark: white;
+  --scroll-indicator: white;
+}
+
+[data-theme="light"] {
+  --bcolor1: #37474F;
+  --button-text-color: white;
+}
+
+
+[data-theme="light"] ul li:nth-child(3) {
+color: #37474F;
+}
+
+[data-theme="dark"] ul li:nth-child(3) {
+color: white;
+}
+
+/* Form styles */
+form {
+  display: inline-block;
+  text-align: left;
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
+form input[type="email"],
+form input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+form input[type="submit"] {
+  display: inline-block;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: var(--bg-color);
+}
+
+form input[type="submit"] {
+  display: inline-block;
+  background-color: var(--secondary-color);
+  color: lightslategray;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+
+iframe {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+}
+
+.contact-card {
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  width: 300px;
+}
+
+.contact-card h2 {
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+.contact-card p {
+color: var(--text-color);
+margin-bottom: 5px;
+}
+
+.contact-card a {
+color: var(--secondary-color);
+text-decoration: none;
+}
+
+.contact-card a:hover {
+color: var(--bg-color);
+}
+
+@media (max-width: 768px) {
+.contact-card {
+width: 100%;
+}
+}
+
+#coordinates-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#coordinates-input input {
+  width: 100px;
+}
+
+/* Add this in style.css */
+
+#zoom-states-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#remove-zoom-state-button,
+#save-zoom-state-button,
+#zoom-states-dropdown {
+  font-size: 16px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+#zoom-states-dropdown {
+  padding-right: 30px;
+}
+
+[data-theme="dark"] #save-zoom-state-button,
+[data-theme="dark"] #remove-zoom-state-button,
+[data-theme="dark"] #zoom-states-dropdown {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: white;
+}
+
+.nav-svg {
+  width: 30px;
+  height: 30px;
+  width: auto;
+  filter: invert(100%);
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+section .p1 {
+  color: var(--secondary-color);
+}
+
+.scroll-progress {
+  background-color: var(--scroll-indicator);
+  height: 100%;
+  width: 0;
+}

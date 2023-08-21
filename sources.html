@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Additional Resources</title>
+    <style>
+.classification-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.classification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  height: 350px;
+  text-align: center;
+}
+
+.classification h3 {
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+
+.classification ul {
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 5px;
+  font-size: 18px;
+}
+
+.classification ul li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.classification ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.classification ul li a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .classification {
+    width: 100%;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="inf+hist.html">Mandelbrot Info</a>
+      <a href="sources.html">Additional Resources</a>
+      <a href="contact.html">Contact Us</a>
+      <img src="" alt="Theme Icon" class="nav-svg" id="theme-icon">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox">
+        <div class="slider round"></div>
+      </label>
+      <em id="switchLabel"></em>
+    </nav>
+    
+    <main>
+      <h1>Additional Resources</h1>
+      <div class="classification-container">
+        <div class="classification">
+          <h3>Videos</h3>
+          <ul>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=2JUAojvFpCo&ab_channel=JimiSol">Mandelbrot Set in 4 Minutes</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=LhOSM6uCWxk&ab_channel=MathsTown">2 Hour Zoom of Mandelbrot Set</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=OlD2rcm971U&ab_channel=AnswersinGenesis">Mandelbrot Set Proves Religion?</a></li>
+          </ul>
+        </div>
+        <div class="classification">
+          <h3>Articles Explaining the Set/DIY</h3>
+          <ul>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://alonso-delarte.medium.com/a-quick-explanation-of-the-mandelbrot-set-41102d7182b">A Quick Explanation of the MandelBrot Set</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.wikihow.com/Plot-the-Mandelbrot-Set-By-Hand">How to Plot A Mandelbrot Set By Hand</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.codingame.com/playgrounds/2358/how-to-plot-the-mandelbrot-set/mandelbrot-set">How to Code Your Own Mandelbrot Set in Python</a></li>
+          </ul>
+        </div>
+        <div class="classification">
+          <h3>Deep Dive Into the Equation</h3>
+          <ul>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://mathworld.wolfram.com/MandelbrotSet.html">The MandelBrot Set Equation in Detail</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.cantorsparadise.com/the-julia-set-e03c29bed3d0">The Julia Set</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.webpages.uidaho.edu/~stevel/565/literature/Unveiling%20the%20Mandelbrot%20Set.pdf">Unveiling the Mandelbrot Set</a></li>
+          </ul>
+      </div>
+    </div>
+  </section>
+    </main>
+
+    <script src="switchtheme.js"></script>
+  
+  </body>
+</html>
