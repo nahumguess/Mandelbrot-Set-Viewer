@@ -16,4 +16,4 @@ Save Image Feature: Found a mesmerizing pattern? Save it directly to your device
 
 Reset Button: Easily return to the default view anytime.
 
-Setup and Installation Clone the repository to your local machine. Set up Firebase authentication as per your requirements. Run the index.html file in your preferred browser. Explore the Mandelbrot Set! Contributing Feel free to fork this repository and submit pull requests. Any suggestions or bug reports are welcome.
+Setup and Installation: Clone the repository to your local machine. Set up Firebase authentication as per your requirements. Run the index.html file in your preferred browser. Explore the Mandelbrot Set! Contributing Feel free to fork this repository and submit pull requests. Any suggestions or bug reports are welcome.
